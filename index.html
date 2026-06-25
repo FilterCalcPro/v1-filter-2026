@@ -4700,7 +4700,7 @@ ${JSON.stringify(ferro, null, 2)}
   if (state.calculos?.crepinas) {
     console.log("Crepinas:", state.calculos.crepinas);
   }
-}
+
   async function listProjects() {
    console.log("listProjects FOI CHAMADA");
   const { data: userData } = await client.auth.getUser();
@@ -4715,7 +4715,7 @@ ${JSON.stringify(ferro, null, 2)}
     console.log("Erro ao buscar projetos:", error.message);
     return;
   }
-    
+      
 
   console.log("Histórico de projetos:", data);
 
