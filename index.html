@@ -4630,6 +4630,22 @@ function gerarPDFProposta(modo) {
   const client = window.supabase.createClient(supabaseUrl, supabaseKey);
 
   console.log("Supabase conectado com sucesso");
+  async function openProject(id) {
+  const { data, error } = await client
+    .from("projects")
+    .select("*")
+    .eq("id", id)
+    .single();
+
+  if (error) {
+    console.log("Erro ao abrir projeto:", error.message);
+    return;
+  }
+
+  console.log("Projeto aberto:", data);
+
+  alert("Projeto carregado: " + data.project_name);
+}
   async function listProjects() {
    console.log("listProjects FOI CHAMADA");
   const { data: userData } = await client.auth.getUser();
@@ -4660,7 +4676,7 @@ function gerarPDFProposta(modo) {
   projects.forEach(p => {
     container.innerHTML += `
       <div style="padding:10px;border:1px solid #ccc;margin-bottom:10px;cursor:pointer;"
-           onclick="openProject('${p.id}')">
+           onclick="openProject('${p.id}')"
         <strong>${p.project_name}</strong><br>
         <small>${new Date(p.created_at).toLocaleString()}</small>
       </div>
