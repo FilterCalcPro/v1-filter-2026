@@ -4631,20 +4631,9 @@ function gerarPDFProposta(modo) {
 
   console.log("Supabase conectado com sucesso");
   async function openProject(id) {
-  const { data, error } = await client
-    .from("projects")
-    .select("*")
-    .eq("id", id)
-    .single();
-
-  if (error) {
-    console.log("Erro ao abrir projeto:", error.message);
-    return;
-  }
-
-  console.log("Projeto aberto:", data);
-
-  alert("Projeto carregado: " + data.project_name);
+function openProject(id) {
+  console.log("CLICOU NO PROJETO ID:", id);
+  alert("clicou: " + id);
 }
   async function listProjects() {
    console.log("listProjects FOI CHAMADA");
