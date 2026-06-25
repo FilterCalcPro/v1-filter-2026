@@ -2012,6 +2012,10 @@ function calcularCrepinas(modelo, cabecote) {
     resultado.montagemDisponivel = ["lateral"];
     resultado.montagemObrigatoria = "lateral";
   }
+  if (window.__SYSTEM_STATE) {
+  window.__SYSTEM_STATE.calculos = window.__SYSTEM_STATE.calculos || {};
+  window.__SYSTEM_STATE.calculos.crepinas = resultado;
+}
 
   return resultado;
 }
@@ -4630,13 +4634,14 @@ function gerarPDFProposta(modo) {
   const client = window.supabase.createClient(supabaseUrl, supabaseKey);
 
   console.log("Supabase conectado com sucesso");
-  window.__SYSTEM_STATE = {
-  tipo: null,
-  inputs: {},
-  resultados: {},
-  calculos: {}
-};
- async function openProject(id) {
+function renderFromState() {
+  const state = window.__SYSTEM_STATE;
+  if (!state) return;
+
+  console.log("Re-renderizando sistema:", state);
+}
+  
+async function openProject(id) {
   const { data, error } = await client
     .from("projects")
     .select("*")
@@ -4648,7 +4653,10 @@ function gerarPDFProposta(modo) {
     return;
   }
 
-  console.log(JSON.stringify(data, null, 2));
+  // 1. restaurar estado global
+  window.__SYSTEM_STATE = data.data;
+
+  console.log("Estado restaurado:", window.__SYSTEM_STATE);
 }
   async function listProjects() {
    console.log("listProjects FOI CHAMADA");
@@ -4669,6 +4677,7 @@ function gerarPDFProposta(modo) {
   console.log("Histórico de projetos:", data);
 
   renderProjects(data);
+  renderFromState();
 }
   function renderProjects(projects) {
   const container = document.getElementById("history");
@@ -4738,15 +4747,7 @@ async function saveProject() {
     created_at: new Date().toISOString(),
 
     // aqui entra o "estado completo do sistema"
-   data: {
-  header: {
-    email: userData.user.email
-  },
-
-  crepinas: typeof calcularCrepinas !== "undefined" ? "capturado depois" : null,
-
-  estadoSistema: window.__SYSTEM_STATE || {}
-}
+   data: window.__SYSTEM_STATE
 async function getUser() {
   const { data, error } = await client.auth.getUser();
 
