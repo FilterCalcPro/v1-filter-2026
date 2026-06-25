@@ -4635,28 +4635,25 @@ function gerarPDFProposta(modo) {
 
   console.log("Supabase conectado com sucesso");
 function renderFromState() {
-  console.log("🔥 RENDER EXECUTOU DE VERDADE");
-  alert("render executou");
-}
-  
-async function openProject(id) {
-  const { data, error } = await client
-    .from("projects")
-    .select("*")
-    .eq("id", id)
-    .single();
+  const state = window.__SYSTEM_STATE;
+  if (!state) return;
 
-  if (error) {
-    console.log("Erro ao abrir projeto:", error.message);
-    return;
+  console.log("Render relatório final:", state);
+
+  // EXEMPLO: ferro
+  if (state.calculos?.ferro) {
+    const el = document.getElementById("resultado-ferro-container");
+    if (el) {
+      el.innerHTML = `
+        <pre>${JSON.stringify(state.calculos.ferro, null, 2)}</pre>
+      `;
+    }
   }
 
-  // 1. restaurar estado global
- window.__SYSTEM_STATE = data.data;
-
-console.log("Estado restaurado:", window.__SYSTEM_STATE);
-
-renderFromState();
+  // EXEMPLO: crepinas
+  if (state.calculos?.crepinas) {
+    console.log("Crepinas:", state.calculos.crepinas);
+  }
 }
   async function listProjects() {
    console.log("listProjects FOI CHAMADA");
