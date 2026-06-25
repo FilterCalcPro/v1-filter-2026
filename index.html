@@ -4672,12 +4672,23 @@ async function login() {
 async function saveProject() {
   const { data: userData } = await client.auth.getUser();
 
+  const projectName = prompt("Nome do projeto:");
+
   const project = {
     user_id: userData.user.id,
-    project_name: "Teste Projeto",
+    project_name: projectName,
+    created_at: new Date().toISOString(),
+
+    // aqui entra o "estado completo do sistema"
     data: {
-      vazao: 100,
-      filtro: "areia"
+      header: {
+        email: userData.user.email
+      },
+
+      // depois vamos preencher com os cálculos reais
+      results: {
+        exemplo: "aqui vão os dados dos dimensionamentos"
+      }
     }
   };
 
@@ -4688,7 +4699,8 @@ async function saveProject() {
   if (error) {
     console.log("Erro ao salvar:", error.message);
   } else {
-    console.log("Projeto salvo com sucesso!");
+    alert("Projeto salvo com sucesso!");
+    console.log("Projeto salvo:", project);
   }
 }
 
