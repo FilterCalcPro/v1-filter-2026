@@ -4629,9 +4629,11 @@ function gerarPDFProposta(modo) {
   if (error) {
     alert("Erro: " + error.message);
   } else {
-    alert("Login feito com sucesso!");
-    console.log(data);
-  }
+  alert("Login feito com sucesso!");
+
+  const { data: userData } = await client.auth.getUser();
+  console.log("Usuário logado:", userData.user.email);
+}
 }
   async function getUser() {
   const { data, error } = await client.auth.getUser();
