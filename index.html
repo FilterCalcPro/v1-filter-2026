@@ -4625,7 +4625,28 @@ function gerarPDFProposta(modo) {
   const { data, error } = await client.auth.signInWithPassword({
     email,
     password
-  });
+  }async function saveProject() {
+  const { data: userData } = await client.auth.getUser();
+
+  const project = {
+    user_id: userData.user.id,
+    project_name: "Teste Projeto",
+    data: {
+      vazao: 100,
+      filtro: "areia"
+    }
+  };
+
+  const { error } = await client
+    .from("projects")
+    .insert(project);
+
+  if (error) {
+    console.log("Erro ao salvar:", error.message);
+  } else {
+    console.log("Projeto salvo com sucesso!");
+  }
+});
 
   if (error) {
     alert("Erro: " + error.message);
