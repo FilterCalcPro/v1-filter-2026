@@ -4630,6 +4630,24 @@ function gerarPDFProposta(modo) {
   const client = window.supabase.createClient(supabaseUrl, supabaseKey);
 
   console.log("Supabase conectado com sucesso");
+  async function listProjects() {
+  const { data: userData } = await client.auth.getUser();
+
+  const { data, error } = await client
+    .from("projects")
+    .select("*")
+    .eq("user_id", userData.user.id)
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.log("Erro ao buscar projetos:", error.message);
+    return;
+  }
+
+  console.log("Histórico de projetos:", data);
+
+  renderProjects(data);
+}
   function showSaveButton() {
   const el = document.getElementById("actions");
   if (el) {
