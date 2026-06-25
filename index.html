@@ -4618,16 +4618,35 @@ function gerarPDFProposta(modo) {
   const client = window.supabase.createClient(supabaseUrl, supabaseKey);
 
   console.log("Supabase conectado com sucesso");
-  async function login() {
-    console.log("FUNÇÃO LOGIN FOI CHAMADA");
+async function login() {
+  console.log("FUNÇÃO LOGIN FOI CHAMADA");
+
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
   const { data, error } = await client.auth.signInWithPassword({
     email,
     password
+  });
+
+  if (error) {
+    alert("Erro: " + error.message);
+    return;
   }
-  async function saveProject() {
+
+  alert("Login feito com sucesso!");
+
+  const { data: userData } = await client.auth.getUser();
+
+  document.getElementById("userInfo").innerText =
+    "Bem-vindo, " + userData.user.email;
+
+  console.log("Usuário logado:", userData.user.email);
+
+  saveProject();
+}
+
+async function saveProject() {
   const { data: userData } = await client.auth.getUser();
 
   const project = {
@@ -4648,19 +4667,17 @@ function gerarPDFProposta(modo) {
   } else {
     console.log("Projeto salvo com sucesso!");
   }
-});
+}
+
+async function getUser() {
+  const { data, error } = await client.auth.getUser();
 
   if (error) {
-    alert("Erro: " + error.message);
-  } else {
-  alert("Login feito com sucesso!");
+    console.log("Nenhum usuário logado");
+    return;
+  }
 
-  const { data: userData } = await client.auth.getUser();
-
-  document.getElementById("userInfo").innerText =
-    "Bem-vindo, " + userData.user.email;
-
-  console.log("Usuário logado:", userData.user.email);
+  console.log("Usuário logado:", data.user.email);
 }
 }
   async function getUser() {
