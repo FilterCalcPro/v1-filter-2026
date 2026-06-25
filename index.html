@@ -4654,9 +4654,11 @@ async function openProject(id) {
   }
 
   // 1. restaurar estado global
-  window.__SYSTEM_STATE = data.data;
+ window.__SYSTEM_STATE = data.data;
 
-  console.log("Estado restaurado:", window.__SYSTEM_STATE);
+console.log("Estado restaurado:", window.__SYSTEM_STATE);
+
+renderFromState();
 }
   async function listProjects() {
    console.log("listProjects FOI CHAMADA");
