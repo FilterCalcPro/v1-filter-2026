@@ -4630,11 +4630,6 @@ function gerarPDFProposta(modo) {
   const client = window.supabase.createClient(supabaseUrl, supabaseKey);
 
   console.log("Supabase conectado com sucesso");
-  async function openProject(id) {
-function openProject(id) {
-  console.log("CLICOU NO PROJETO ID:", id);
-  alert("clicou: " + id);
-}
   async function listProjects() {
    console.log("listProjects FOI CHAMADA");
   const { data: userData } = await client.auth.getUser();
