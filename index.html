@@ -4625,7 +4625,8 @@ function gerarPDFProposta(modo) {
   const { data, error } = await client.auth.signInWithPassword({
     email,
     password
-  }async function saveProject() {
+  }
+  async function saveProject() {
   const { data: userData } = await client.auth.getUser();
 
   const project = {
