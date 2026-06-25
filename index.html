@@ -4633,6 +4633,10 @@ function gerarPDFProposta(modo) {
   alert("Login feito com sucesso!");
 
   const { data: userData } = await client.auth.getUser();
+
+  document.getElementById("userInfo").innerText =
+    "Bem-vindo, " + userData.user.email;
+
   console.log("Usuário logado:", userData.user.email);
 }
 }
