@@ -4631,11 +4631,16 @@ function gerarPDFProposta(modo) {
 
   console.log("Supabase conectado com sucesso");
   function showSaveButton() {
-  document.getElementById("actions").innerHTML =
-    `<button onclick="saveProject()" style="padding:10px 20px;">
-      Salvar projeto
-    </button>`;
+  const el = document.getElementById("actions");
+  if (el) {
+    el.innerHTML = `
+      <button onclick="saveProject()" style="padding:10px 20px;">
+        Salvar projeto
+      </button>
+    `;
+  }
 }
+
 async function login() {
   console.log("FUNÇÃO LOGIN FOI CHAMADA");
 
@@ -4658,6 +4663,7 @@ async function login() {
 
   document.getElementById("userInfo").innerText =
     "Bem-vindo, " + userData.user.email;
+  showSaveButton();
 
   console.log("Usuário logado:", userData.user.email);
 
