@@ -4634,6 +4634,24 @@ function gerarPDFProposta(modo) {
   const client = window.supabase.createClient(supabaseUrl, supabaseKey);
 
   console.log("Supabase conectado com sucesso");
+  async function openProject(id) {
+  const { data, error } = await client
+    .from("projects")
+    .select("*")
+    .eq("id", id)
+    .single();
+
+  if (error) {
+    console.log("Erro ao abrir projeto:", error.message);
+    return;
+  }
+
+  window.__SYSTEM_STATE = data.data;
+
+  console.log("Estado restaurado:", window.__SYSTEM_STATE);
+
+  renderFromState();
+}
 function renderFromState() {
   const state = window.__SYSTEM_STATE;
   if (!state) return;
