@@ -4631,6 +4631,7 @@ function gerarPDFProposta(modo) {
 
   console.log("Supabase conectado com sucesso");
   async function listProjects() {
+   console.log("listProjects FOI CHAMADA");
   const { data: userData } = await client.auth.getUser();
 
   const { data, error } = await client
@@ -4700,6 +4701,7 @@ async function login() {
   document.getElementById("userInfo").innerText =
     "Bem-vindo, " + userData.user.email;
   showSaveButton();
+  listProjects();
 
   console.log("Usuário logado:", userData.user.email);
 
@@ -4753,5 +4755,6 @@ async function getUser() {
 
 </script>
 <div id="actions" style="margin:20px 0;"></div>
+<div id="history" style="margin-top:20px;"></div>
 </body>
 </html>
