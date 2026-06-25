@@ -4746,9 +4746,19 @@ async function saveProject() {
     project_name: projectName,
     created_at: new Date().toISOString(),
 
-    // aqui entra o "estado completo do sistema"
-   data: window.__SYSTEM_STATE
+    data: window.__SYSTEM_STATE
+  };
+
+  const { error } = await client
+    .from("projects")
+    .insert(project);
+
+  if (error) {
+    console.log("Erro ao salvar:", error.message);
+  } else {
+    alert("Projeto salvo com sucesso!");
   }
+}
   
 async function getUser() {
   const { data, error } = await client.auth.getUser();
