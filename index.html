@@ -4643,10 +4643,28 @@ function gerarPDFProposta(modo) {
     console.log("Erro ao buscar projetos:", error.message);
     return;
   }
+    
 
   console.log("Histórico de projetos:", data);
 
   renderProjects(data);
+}
+  function renderProjects(projects) {
+  const container = document.getElementById("history");
+
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  projects.forEach(p => {
+    container.innerHTML += `
+      <div style="padding:10px;border:1px solid #ccc;margin-bottom:10px;cursor:pointer;"
+           onclick="openProject('${p.id}')">
+        <strong>${p.project_name}</strong><br>
+        <small>${new Date(p.created_at).toLocaleString()}</small>
+      </div>
+    `;
+  });
 }
   function showSaveButton() {
   const el = document.getElementById("actions");
